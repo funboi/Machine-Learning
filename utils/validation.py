@@ -1,6 +1,8 @@
+# Author: Kshitij Kayastha
+# Date: April 25, 2021
+
+
 import numpy as np
-
-
 
 def is_1d(y):
     """

@@ -1,3 +1,6 @@
+# Author: Kshitij Kayastha
+# Date: April 25, 2021
+
 
 import numpy as np
 from .validation import is_column, is_row

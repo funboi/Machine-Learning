@@ -7,7 +7,6 @@ import sys
 sys.path.append('../')
 
 import numpy as np
-import pandas as pd
 
 from scipy.sparse import issparse
 from utils.transform import convert_to_column, add_bias
@@ -31,12 +30,9 @@ class LinearRegression:
     cost : total error of the model after each iteration
     """
 
-    def __init__(self, eta=0.05, n_iters=1000):
-        self.eta = eta
-        self.n_iters = n_iters
+    def __init__(self, scale=True):
         self.theta = None
-        self.cost = []
-
+        self.scale = scale
 
     def fit(self, X, y):
         """
@@ -57,8 +53,9 @@ class LinearRegression:
         
         if issparse(X):
             raise ValueError("Linear regression on sparse matrices has not yet been implemented")
-            
-        X = scale(X)
+
+        if self.scale:    
+            X = scale(X)
         X = add_bias(X)
 
         symm = np.matmul(X.T, X)
@@ -82,7 +79,8 @@ class LinearRegression:
             Predicted values
         """
         X = np.asarray(X)
-        X = scale(X)
+        if self.scale:
+            X = scale(X)
         X = add_bias(X)
         
         y_pred = np.dot(X, self.theta)

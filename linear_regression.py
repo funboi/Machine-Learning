@@ -20,7 +20,7 @@ class LinearRegression:
     Parameters
     ----------
     scale : bool, default=True
-        Scale the training and testing data samples
+        Scale the training samples
 
     Attributes
     ----------

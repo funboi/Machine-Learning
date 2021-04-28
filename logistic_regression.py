@@ -22,7 +22,7 @@ class LogisticRegression:
     epochs : int, default=10000
         Number of iterations over the training set
     scale : bool, default True
-        Scale the training and testing data samples
+        Scale the training samples
 
     Attributes
     ----------

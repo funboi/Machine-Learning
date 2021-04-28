@@ -19,15 +19,12 @@ class LinearRegression:
 
     Parameters
     ----------
-    eta : float
-        Learning rate
-    n_iters : int
-        Number of iterations over the training set
+    scale : bool, default=True
+        Scale the training and testing data samples
 
     Attributes
     ----------
     theta : weights after fitting the model
-    cost : total error of the model after each iteration
     """
 
     def __init__(self, scale=True):

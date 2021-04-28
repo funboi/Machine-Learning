@@ -7,6 +7,7 @@ import sys
 sys.path.append('../')
 
 import numpy as np
+import pandas as pd
 
 from utils.transform import add_bias, convert_to_column, mean_variance_axis
 from sklearn.preprocessing import scale
@@ -28,11 +29,13 @@ class LogisticRegression:
     ----------
     theta : weights after fitting the model
     cost : total error of the model after each iteration
+    epsilon: error offset
     """
     def __init__(self, eta=0.05, epochs=1000, scale=True):
         self.scale = scale
         self.eta = eta
         self.epochs = epochs
+        self._epsilon = 1 + 10**(-8)
 
     def fit(self, X, y):
         """
@@ -49,12 +52,13 @@ class LogisticRegression:
         """
         X = np.asarray(X)
         y = convert_to_column(y)
-        n_samples = X.shape[0]
-        m_features = X.shape[1]
 
         if self.scale:
             X = scale(X)
         X = add_bias(X)
+        n_samples = X.shape[0]
+        m_features = X.shape[1]
+        
         self.theta = np.zeros((m_features, 1))
         self.mean, self.variance = mean_variance_axis(X, axis=0)
         self.cost = []
@@ -94,7 +98,7 @@ class LogisticRegression:
 
     def _cost(self, y_true, y_pred):
         total_cost = -(1 / len(y_true)) * np.sum(
-            y_true * np.log(y_pred) +
-            (1 - y_true) * np.log(1 - y_pred)
+            y_true * np.log(y_pred+self._epsilon) +
+            (1 - y_true) * np.log(1 - y_pred + self._epsilon)
         )
         return total_cost
